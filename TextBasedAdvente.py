@@ -14,18 +14,19 @@ class Point():
         self.x_coord *= mn
         self.y_coord *= mn
         
-p1 = Point(0,0)
-print(p1)
-p1.move(1,1)
-print(p1)
-p1.multi(3)
-print(p1)
+# p1 = Point(0,0)
+# print(p1)
+# p1.move(1,1)
+# print(p1)
+# p1.multi(3)
+# print(p1)
 
 class Des():
     def __init__(self, question, answer):
         self.question = question
         self.answer_list = answer
         self.connections = []
+        self.connection = None
         
     def make_choice(self):
         print (self.question)
@@ -33,18 +34,16 @@ class Des():
         while choice not in self.answer_list:
             print("Invalid Answer")
             choice = input(str(self.answer_list))
-        return choice
-    
-    def connectAndPick(self, con1, con2):
-        choice = self.make_choice()
-        self.connections.append(con1)
-        self.connections.append(con2)
         if choice == self.answer_list[0]:
             self.connection = self.connections[0]
         if choice == self.answer_list[1]:
             self.connection = self.connections[1]
         
-        return str(self.connection)
+        return self.connection
+
+    def connectAndPick(self, con1, con2):
+        self.connections.append(con1)
+        self.connections.append(con2)
         
 
 start = Des("Left or right?", ["left", "right"])
@@ -54,6 +53,8 @@ fireplace = Des("You see a fairy, follow her?", ["follow", "don't follow"])
 follow = Des("You find a fairy viilage. Do you party with them?", ['party', 'don\'t party'])
 claim = Des("You claim the manson. Do the paperwork?", ['yes','no'])
 inside = Des("You don\'t claim the mason. Go inside the manson?", ['yes','no'])
+steal = Des("You steal some stuff. Run away or stay and get more stuff?", ["run", "stay"])
+stay = Des("Stay inside and wait. The owner returns, talk to them or no?", ['talk', 'run'])
 
 
 start.connectAndPick(left, right)
@@ -61,7 +62,14 @@ left.connectAndPick(claim, inside)
 right.connectAndPick(fireplace, "You freez to death due to the cold.")
 fireplace.connectAndPick(follow, "Get killed by angry fairies.")
 follow.connectAndPick("You live forever with the fairies", "You get killed out into the cold and die.")
-inside.connectAndPick("Steal stuff.", "Stay inside and wait.")
+inside.connectAndPick(steal, stay)
 claim.connectAndPick("You do the paperwork and get a free mason.", "You don/'t do the paperwork and get sued and jailed by the real owner.")
+steal.connectAndPick("You get away with /$5000.", "You get caught and fined and go into debt.")
+stay.connectAndPick("You two become friends and yo become rich.", "You get jailed as a trespasser.")
 
-        
+current = start
+while type(current) is not str:
+    current = current.make_choice()
+print(current)
+    
+    
