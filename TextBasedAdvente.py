@@ -55,17 +55,18 @@ claim = Des("You claim the manson. Do the paperwork?", ['yes','no'])
 inside = Des("You don\'t claim the mason. Go inside the manson?", ['yes','no'])
 steal = Des("You steal some stuff. Run away or stay and get more stuff?", ["run", "stay"])
 stay = Des("Stay inside and wait. The owner returns, talk to them or no?", ['talk', 'run'])
-
+village = Des("You find a village. Stay or no?", ["stay", "leave"])
 
 start.connectAndPick(left, right)
 left.connectAndPick(claim, inside)  
 right.connectAndPick(fireplace, "You freez to death due to the cold.")
 fireplace.connectAndPick(follow, "Get killed by angry fairies.")
-follow.connectAndPick("You live forever with the fairies", "You get killed out into the cold and die.")
+follow.connectAndPick(village, "You get killed out into the cold and die.")
 inside.connectAndPick(steal, stay)
 claim.connectAndPick("You do the paperwork and get a free mason.", "You don/'t do the paperwork and get sued and jailed by the real owner.")
 steal.connectAndPick("You get away with /$5000.", "You get caught and fined and go into debt.")
-stay.connectAndPick("You two become friends and yo become rich.", "You get jailed as a trespasser.")
+stay.connectAndPick("You two become friends and you become rich.", "You get jailed as a trespasser.")
+village.connectAndPick("You live forever with the fairies", "You leave in two pieces(aka dead~).")
 
 current = start
 while type(current) is not str:
